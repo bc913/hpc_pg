@@ -1,0 +1,565 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "config_base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}"
+        },
+        {
+            "name": "msvc_vs2019",
+            "displayName": "Microsoft VS 2019 config",
+            "inherits": "config_base",
+            "generator": "Visual Studio 16 2019",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_SYSTEM_VERSION":"10.0.18362.0"
+            }
+        },
+        {
+            "name": "msvc_vs2022",
+            "displayName": "Microsoft VS 2022 config",
+            "inherits": "config_base",
+            "generator": "Visual Studio 17 2022",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_SYSTEM_VERSION":"10.0.20348.0"
+            }
+        },
+        {
+            "name": "msvc",
+            "displayName": "Windows config",
+            "inherits": "msvc_vs2019",
+            "hidden": true
+        },
+        {
+            "name": "msvc_cpu",
+            "displayName": "MSVC CPU config",
+            "inherits": "msvc",
+            "toolset":"v143,version=14.38",
+            "hidden": true,
+            "cacheVariables": {
+                "ENABLE_CUDA":"OFF",
+                "ENABLE_HIP":"OFF"
+            }
+        },
+        {
+            "name": "msvc_cpu_sp",
+            "displayName": "MSVC CPU single precision config",
+            "inherits": "msvc_cpu",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"OFF"
+            }
+        },
+        {
+            "name": "msvc_cpu_dp",
+            "displayName": "MSVC CPU double precision config",
+            "inherits": "msvc_cpu",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"ON"
+            }
+        },
+        {
+            "name": "msvc_cuda",
+            "displayName": "MSVC CUDA config",
+            "inherits": "msvc",
+            "toolset":"v143,version=14.38,cuda=12.8",
+            "hidden": true,
+            "cacheVariables": {
+                "ENABLE_CUDA":"ON",
+                "ENABLE_HIP":"OFF"
+            }
+        },
+        {
+            "name": "msvc_cuda_sp",
+            "displayName": "MSVC CUDA single precision config",
+            "inherits": "msvc_cuda",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"OFF"
+            }
+        },
+        {
+            "name": "msvc_cuda_dp",
+            "displayName": "MSVC CUDA double precision config",
+            "inherits": "msvc_cuda",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"ON"
+            }
+        },
+        {
+            "name": "msvc_hip",
+            "displayName": "MSVC HIP config",
+            "inherits": "msvc",
+            "toolset":"v143,version=14.38",
+            "hidden": true,
+            "cacheVariables": {
+                "ENABLE_CUDA":"OFF",
+                "ENABLE_HIP":"ON"
+            }
+        },
+        {
+            "name": "msvc_hip_sp",
+            "displayName": "MSVC HIP single precision config",
+            "inherits": "msvc_hip",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"OFF"
+            }
+        },
+        {
+            "name": "msvc_hip_dp",
+            "displayName": "MSVC HIP double precision config",
+            "inherits": "msvc_hip",
+            "hidden": false,
+            "cacheVariables": {
+                "ENABLE_DOUBLE_PRECISION":"ON"
+            }
+        },
+        {
+            "name": "ninja_multi_base",
+            "displayName": "Ninja base config",
+            "generator": "Ninja Multi-Config",
+            "hidden": true,
+            "inherits": "config_base",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "ninja_win",
+            "displayName": "Ninja Win Multi",
+            "inherits": "ninja_multi_base",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "ninja_lnx",
+            "displayName": "Ninja Linux Multi",
+            "inherits": "ninja_multi_base",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc-11",
+                "CMAKE_CXX_COMPILER": "g++-11"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "win_cpu_sp_debug",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_cpu_sp_debug_clean",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cpu_sp_release",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_cpu_sp_release_clean",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cpu_sp_rel_with_deb_info",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_cpu_sp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cpu_dp_debug",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_cpu_dp_debug_clean",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cpu_dp_release",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_cpu_dp_release_clean",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cpu_dp_rel_with_deb_info",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_cpu_dp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_sp_debug",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_cuda_sp_debug_clean",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_sp_release",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_cuda_sp_release_clean",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_sp_rel_with_deb_info",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_cuda_sp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_dp_debug",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_cuda_dp_debug_clean",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_dp_release",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_cuda_dp_release_clean",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_cuda_dp_rel_with_deb_info",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_cuda_dp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_sp_debug",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_hip_sp_debug_clean",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_sp_release",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_hip_sp_release_clean",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_sp_rel_with_deb_info",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_hip_sp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_dp_debug",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_hip_dp_debug_clean",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_dp_release",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "win_hip_dp_release_clean",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "win_hip_dp_rel_with_deb_info",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "win_hip_dp_rel_with_deb_info_clean",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "RelWithDebInfo",
+            "cleanFirst": true
+        },        
+        {
+            "name": "ninja_win_debug",
+            "configurePreset": "ninja_win",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ninja_win_debug_clean",
+            "configurePreset": "ninja_win",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "ninja_win_release",
+            "configurePreset": "ninja_win",
+            "configuration": "Release"
+        },
+        {
+            "name": "ninja_win_release_clean",
+            "configurePreset": "ninja_win",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "ninja_win_rel_deb_info",
+            "configurePreset": "ninja_win",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "ninja_win_min_size_rel",
+            "configurePreset": "ninja_win",
+            "configuration": "MinSizeRel"
+        },
+        {
+            "name": "lnx_debug",
+            "configurePreset": "ninja_lnx",
+            "configuration": "Debug"
+        },
+        {
+            "name": "lnx_debug_clean",
+            "configurePreset": "ninja_lnx",
+            "configuration": "Debug",
+            "cleanFirst": true
+        },
+        {
+            "name": "lnx_release",
+            "configurePreset": "ninja_lnx",
+            "configuration": "Release"
+        },
+        {
+            "name": "lnx_release_clean",
+            "configurePreset": "ninja_lnx",
+            "configuration": "Release",
+            "cleanFirst": true
+        },
+        {
+            "name": "lnx_rel_deb_info",
+            "configurePreset": "ninja_lnx",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "lnx_min_size_rel",
+            "configurePreset": "ninja_lnx",
+            "configuration": "MinSizeRel"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "base",
+            "description": "",
+            "displayName": "",
+            "hidden": true,
+            "output": {"outputOnFailure": true, "shortProgress": true},
+            "execution": {"noTestsAction": "error", "stopOnFailure": true}
+        },
+        {
+            "name": "msvc_cpu_sp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_cpu_sp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cpu_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc_cpu_dp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_cpu_dp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cpu_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc_cuda_sp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_cuda_sp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cuda_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc_cuda_dp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_cuda_dp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_cuda_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc_hip_sp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_hip_sp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_hip_sp",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc_hip_dp_test_debug",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc_hip_dp_test_release",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "msvc_hip_dp",
+            "configuration": "Release"
+        },
+        {
+            "name": "ninja_win_test",
+            "hidden": false,
+            "inherits": "base",
+            "configurePreset": "ninja_win"
+        },
+        {
+            "name": "linux_test",
+            "hidden": true,
+            "inherits": "base",
+            "configurePreset": "ninja_lnx"
+        },
+        {
+            "name": "linux_test_debug",
+            "hidden": false,
+            "inherits": "linux_test",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux_test_release",
+            "hidden": false,
+            "inherits": "linux_test",
+            "configuration": "Release"
+        }
+    ]
+}
