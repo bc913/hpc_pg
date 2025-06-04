@@ -19,7 +19,7 @@ list(APPEND CMAKE_MODULE_PATH ${HPC_PG_MODULE_PATH} ${CONAN_PACKAGE_PATH})
 # System
 include(GNUInstallDirs)
 # User
-
+include(TargetDefinitions)
 
 #-------------------
 # Settings
