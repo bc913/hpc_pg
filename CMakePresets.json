@@ -24,7 +24,7 @@
                 "rhs": "Windows"
             },
             "cacheVariables": {
-                "CMAKE_SYSTEM_VERSION":"10.0.18362.0"
+                "CMAKE_SYSTEM_VERSION":"10.0.19041.0"
             }
         },
         {
@@ -52,7 +52,7 @@
             "name": "msvc_cpu",
             "displayName": "MSVC CPU config",
             "inherits": "msvc",
-            "toolset":"v143,version=14.38",
+            "toolset":"v142,version=14.29",
             "hidden": true,
             "cacheVariables": {
                 "ENABLE_CUDA":"OFF",
@@ -81,7 +81,7 @@
             "name": "msvc_cuda",
             "displayName": "MSVC CUDA config",
             "inherits": "msvc",
-            "toolset":"v143,version=14.38,cuda=12.8",
+            "toolset":"v142,version=14.29,cuda=12.8",
             "hidden": true,
             "cacheVariables": {
                 "ENABLE_CUDA":"ON",
@@ -110,7 +110,7 @@
             "name": "msvc_hip",
             "displayName": "MSVC HIP config",
             "inherits": "msvc",
-            "toolset":"v143,version=14.38",
+            "toolset":"v142,version=14.29",
             "hidden": true,
             "cacheVariables": {
                 "ENABLE_CUDA":"OFF",
