@@ -51,9 +51,9 @@ add_subdirectory(src)
 #-------------------
 # Tests
 #-------------------
-# if(HPC_PG_BUILD_TESTS)
-#     MESSAGE(STATUS "========== CONFIGURING TESTS... ==========")
-#     enable_testing()
-#     include(CTest)
-#     add_subdirectory(tests)
-# endif()
+if(HPC_PG_BUILD_TESTS)
+    MESSAGE(STATUS "========== CONFIGURING TESTS... ==========")
+    enable_testing()
+    include(CTest)
+    add_subdirectory(tests)
+endif()
