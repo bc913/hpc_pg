@@ -24,7 +24,7 @@ include(GNUInstallDirs)
 #-------------------
 # Settings
 #-------------------
-set(_BELIK_TARGET_BASE_NAME ${PROJECT_NAME})
+set(_HPC_TARGET_NAME ${PROJECT_NAME})
 
 # Common
 #-------------------
