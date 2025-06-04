@@ -1,0 +1,14 @@
+{
+    "workbench.editor.restoreViewState": true,
+    "cmake.useCMakePresets": "always",
+    "cmake.buildBeforeRun": false,
+    "cmake.configureOnEdit": false,
+    "cmake.configureOnOpen": false,
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.deleteBuildDirOnCleanConfigure": true,
+    "telemetry.feedback.enabled": false,
+    "dotnetAcquisitionExtension.enableTelemetry": false,
+    "MATLAB.telemetry": false,
+    "docker.lsp.telemetry": "off",
+    "gitlens.telemetry.enabled": false
+}
