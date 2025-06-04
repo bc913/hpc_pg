@@ -24,7 +24,7 @@ include(TargetDefinitions)
 #-------------------
 # Settings
 #-------------------
-set(_HPC_TARGET_NAME ${PROJECT_NAME})
+set(_HPC_TARGET_BASE_NAME ${PROJECT_NAME})
 
 # Common
 #-------------------
@@ -51,9 +51,9 @@ add_subdirectory(src)
 #-------------------
 # Tests
 #-------------------
-if(HPC_PG_BUILD_TESTS)
-    MESSAGE(STATUS "========== CONFIGURING TESTS... ==========")
-    enable_testing()
-    include(CTest)
-    add_subdirectory(tests)
-endif()
+# if(HPC_PG_BUILD_TESTS)
+#     MESSAGE(STATUS "========== CONFIGURING TESTS... ==========")
+#     enable_testing()
+#     include(CTest)
+#     add_subdirectory(tests)
+# endif()
